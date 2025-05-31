@@ -126,7 +126,7 @@ Recommendation scale:
 - Risk of Solana
 - 
 **Screen recordings**
-  "C:\Users\HP\Recordings\Week1assign-1748710274897.mp4"
+  C:\Users\HP\Recordings\Week1assign-1748710274897.mp4
   
 ruwanjeh2@gmail.com
 adelewigitz@gmail.com
