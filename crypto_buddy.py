@@ -2,13 +2,28 @@ import requests
 import json
 import time
 from typing import Dict, Any, Optional
+import logging
+from dataclasses import dataclass
+
+# Configuration
+@dataclass
+class Config:
+    API_BASE: str = "https://api.coingecko.com/api/v3"
+    CACHE_DURATION: int = 300  # 5 minutes
+    RATE_LIMIT: int = 50  # requests per minute
+    TIMEOUT: int = 10  # seconds
+
+# At the top of your file, configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
 class CryptoBuddy:
     def __init__(self):
         self.name = "CryptoBuddy"
-        self.api_base = "https://api.coingecko.com/api/v3"
+        self.config = Config()
+        self.api_base = self.config.API_BASE
         self.cache = {}
-        self.cache_duration = 300  # 5 minutes
+        self.cache_duration = self.config.CACHE_DURATION
+        self.last_request_time = 0
         
         # Predefined sustainability scores (manual research)
         self.sustainability_db = {
@@ -55,7 +70,7 @@ class CryptoBuddy:
             return None
             
         except Exception as e:
-            print(f"⚠️ API Error: {e}")
+            logging.error(f"API Error: {e}")
             return self.get_fallback_data(crypto_id)
 
     def get_fallback_data(self, crypto_id: str) -> Dict[str, Any]:
@@ -133,13 +148,30 @@ class CryptoBuddy:
         """Main query processing with if-else logic"""
         query = query.lower().strip()
         
-        # Greeting responses
-        if any(word in query for word in ['hi', 'hello', 'hey']):
-            return "👋 Hey there! I'm CryptoBuddy! Ask me about crypto investments! Try 'help' for suggestions."
-        
-        # Help responses
-        if 'help' in query:
-            return """🤖 **CryptoBuddy Help Menu**
+        # Route to appropriate handler
+        if self._is_greeting(query):
+            return self._handle_greeting()
+        elif 'help' in query:
+            return self._handle_help()
+        elif 'list' in query:
+            return self._handle_list()
+        elif self._is_sustainability_query(query):
+            return self._handle_sustainability()
+        elif self._is_trending_query(query):
+            return self._handle_trending()
+        elif self._is_comparison_query(query):
+            return self._handle_comparison(query)
+        else:
+            return self._handle_specific_crypto(query)
+
+    def _is_greeting(self, query: str) -> bool:
+        return any(word in query for word in ['hi', 'hello', 'hey'])
+
+    def _handle_greeting(self) -> str:
+        return "👋 Hey there! I'm CryptoBuddy! Ask me about crypto investments! Try 'help' for suggestions."
+
+    def _handle_help(self) -> str:
+        return """🤖 **CryptoBuddy Help Menu**
 • Ask about specific cryptos: 'How's Bitcoin?' or 'Tell me about Ethereum'
 • Find sustainable options: 'What's the greenest crypto?'
 • Get trending coins: 'What's rising today?'
@@ -147,48 +179,51 @@ class CryptoBuddy:
 • Type 'list' to see cryptos I know about
 • Type 'exit' to quit"""
 
-        # List available cryptos
-        if 'list' in query:
-            crypto_list = ', '.join([crypto.title() for crypto in self.top_cryptos])
-            return f"🪙 **I can analyze these cryptos:**\n{crypto_list}"
+    def _handle_list(self) -> str:
+        crypto_list = ', '.join([crypto.title() for crypto in self.top_cryptos])
+        return f"🪙 **I can analyze these cryptos:**\n{crypto_list}"
+
+    def _is_sustainability_query(self, query: str) -> bool:
+        return any(word in query for word in ['green', 'sustainable', 'eco', 'environment'])
+
+    def _handle_sustainability(self) -> str:
+        best_sustainable = max(self.sustainability_db.items(), key=lambda x: x[1]['score'])
+        crypto_name, data = best_sustainable
+        return f"{data['emoji']} **Most Sustainable: {crypto_name.upper()}**\nScore: {data['score']}/10 - {data['reason']}\n\n{self.get_investment_advice(crypto_name)}"
+
+    def _is_trending_query(self, query: str) -> bool:
+        return any(word in query for word in ['trending', 'rising', 'hot', 'bull'])
+
+    def _handle_trending(self) -> str:
+        trending_cryptos = []
+        for crypto in self.top_cryptos[:5]:
+            data = self.get_crypto_data(crypto)
+            if data and data.get('usd_24h_change', 0) > 2:
+                trending_cryptos.append((crypto, data.get('usd_24h_change', 0)))
         
-        # Sustainability queries
-        if any(word in query for word in ['green', 'sustainable', 'eco', 'environment']):
-            best_sustainable = max(self.sustainability_db.items(), key=lambda x: x[1]['score'])
-            crypto_name, data = best_sustainable
-            return f"{data['emoji']} **Most Sustainable: {crypto_name.upper()}**\nScore: {data['score']}/10 - {data['reason']}\n\n{self.get_investment_advice(crypto_name)}"
-        
-        # Trending/rising queries
-        if any(word in query for word in ['trending', 'rising', 'hot', 'bull']):
-            trending_cryptos = []
-            for crypto in self.top_cryptos[:5]:  # Check top 5
-                data = self.get_crypto_data(crypto)
-                if data and data.get('usd_24h_change', 0) > 2:
-                    trending_cryptos.append((crypto, data.get('usd_24h_change', 0)))
-            
-            if trending_cryptos:
-                trending_cryptos.sort(key=lambda x: x[1], reverse=True)
-                result = "🚀 **Trending Up Today:**\n"
-                for crypto, change in trending_cryptos[:3]:
-                    result += f"• {crypto.upper()}: +{change:.1f}%\n"
-                return result
-            else:
-                return "😐 No major gainers today. Market seems quiet!"
-        
-        # Specific crypto queries
+        if trending_cryptos:
+            trending_cryptos.sort(key=lambda x: x[1], reverse=True)
+            result = "🚀 **Trending Up Today:**\n"
+            for crypto, change in trending_cryptos[:3]:
+                result += f"• {crypto.upper()}: +{change:.1f}%\n"
+            return result
+        return "😐 No major gainers today. Market seems quiet!"
+
+    def _is_comparison_query(self, query: str) -> bool:
+        return 'vs' in query or 'compare' in query
+
+    def _handle_comparison(self, query: str) -> str:
+        words = query.split()
+        found_cryptos = [word for word in words if word in self.top_cryptos]
+        if len(found_cryptos) >= 2:
+            crypto1, crypto2 = found_cryptos[0], found_cryptos[1]
+            return f"**{crypto1.upper()} vs {crypto2.upper()}:**\n\n{self.get_investment_advice(crypto1)}\n\n---\n\n{self.get_investment_advice(crypto2)}"
+        return "🤔 Please specify two cryptocurrencies to compare"
+
+    def _handle_specific_crypto(self, query: str) -> str:
         for crypto in self.top_cryptos:
             if crypto in query or crypto.replace('-', '') in query:
                 return self.get_investment_advice(crypto)
-        
-        # Comparison queries (simple)
-        if 'vs' in query or 'compare' in query:
-            words = query.split()
-            found_cryptos = [word for word in words if word in self.top_cryptos]
-            if len(found_cryptos) >= 2:
-                crypto1, crypto2 = found_cryptos[0], found_cryptos[1]
-                return f"**{crypto1.upper()} vs {crypto2.upper()}:**\n\n{self.get_investment_advice(crypto1)}\n\n---\n\n{self.get_investment_advice(crypto2)}"
-        
-        # Default response
         return "🤔 I didn't understand that. Try asking about Bitcoin, Ethereum, or type 'help' for suggestions!"
 
     def run(self):
