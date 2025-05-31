@@ -115,20 +115,18 @@ Recommendation scale:
 - Never invest more than you can afford to lose  
 - Consider consulting a financial advisor
 
-For further practice try this commands;
+**For further practice try this commands;**
 
-"How's Bitcoin doing?"
+- How's Bitcoin doing?
+- What's the most sustainable crypto?
+- Show me trending coins
+- Compare Bitcoin and Ethereum
+- What's the market sentiment?
+- Suggest a portfolio
+- Risk of Solana
 
-"What's the most sustainable crypto?"
-
-"Show me trending coins"
-
-"Compare Bitcoin and Ethereum"
-
-"What's the market sentiment?"
-
-"Suggest a portfolio"
-
-"Risk of Solana"
-
-
+ruwanjeh2@gmail.com
+adelewigitz@gmail.com
+patmbugus@gmail.com
+mwaringarajab01@gmail.com
+daniel.kague@gmail.com
