@@ -1,82 +1,63 @@
 📖 CryptoBuddy - AI-Powered Cryptocurrency Investment Advisor
-Python Version
-License
-GitHub Repo
 
-🌟 Introduction
+```markdown
+# 📖 CryptoBuddy - AI-Powered Cryptocurrency Investment Advisor
+
+![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)
+![GitHub Repo](https://github.com/Danielkague/crypto_buddy_chatbot.git)
+
+## 🌟 Introduction
 CryptoBuddy is an intelligent chatbot that provides comprehensive cryptocurrency investment advice through a conversational interface. It combines real-time market data with sustainability metrics to help you make informed investment decisions.
 
-✨ Features
-Real-time crypto analysis with price trends and market data
+## ✨ Features
+- Real-time crypto analysis with price trends and market data
+- Sustainability scoring for eco-conscious investing
+- Comprehensive comparisons between cryptocurrencies  
+- Trending coins identification to spot market movers
+- Educational insights about each cryptocurrency
 
-Sustainability scoring for eco-conscious investing
+## 🛠️ Technical Implementation
+### Built With
+- Python 3.7+
+- CoinGecko API for real-time data
+- Custom sustainability scoring system
+- Advanced caching for performance
+- Robust error handling
 
-Comprehensive comparisons between cryptocurrencies
+## 📊 Supported Cryptocurrencies
+- Bitcoin (BTC)
+- Ethereum (ETH)  
+- Cardano (ADA)
+- Solana (SOL)
+- Polygon (MATIC)
+- Avalanche (AVAX)
+- Algorand (ALGO)
+- Tezos (XTZ)
+- Chainlink (LINK)
+- Polkadot (DOT)
+- Litecoin (LTC)
+- Dogecoin (DOGE)
 
-Trending coins identification to spot market movers
+## 🚀 Getting Started
+### Prerequisites
+- Python 3.7 or higher
+- Internet connection
+- `requests` library (`pip install requests`)
 
-Educational insights about each cryptocurrency
-
-🛠️ Technical Implementation
-Built With
-Python 3.7+
-
-CoinGecko API for real-time data
-
-Custom sustainability scoring system
-
-Advanced caching for performance
-
-Robust error handling
-
-📊 Supported Cryptocurrencies
-CryptoBuddy currently supports analysis of these major cryptocurrencies:
-
-Bitcoin (BTC)
-
-Ethereum (ETH)
-
-Cardano (ADA)
-
-Solana (SOL)
-
-Polygon (MATIC)
-
-Avalanche (AVAX)
-
-Algorand (ALGO)
-
-Tezos (XTZ)
-
-Chainlink (LINK)
-
-Polkadot (DOT)
-
-Litecoin (LTC)
-
-Dogecoin (DOGE)
-
-🚀 Getting Started
-Prerequisites
-Python 3.7 or higher
-
-Internet connection
-
-requests library (pip install requests)
-
-Installation
-Clone the repository:
-
-bash
+### Installation
+1. Clone the repository:
+```bash
 git clone https://github.com/Danielkague/crypto_buddy_chatbot.git
 cd crypto_buddy_chatbot
-Run the chatbot:
+```
 
-bash
+2. Run the chatbot:
+```bash
 python crypto_bot.py
-Usage Examples
-Start interacting with CryptoBuddy:
+```
 
+## 💬 Usage Examples
+```
 🤖 CryptoBuddy starting up...
 🔗 Connecting to crypto data...
 ✅ Ready to help with crypto investment advice!
@@ -91,33 +72,29 @@ Start interacting with CryptoBuddy:
 • Compare options: 'Bitcoin vs Ethereum'
 • Type 'list' to see cryptos I know about
 • Type 'exit' to quit
+```
+
 Try these queries:
+- "How's Bitcoin doing?"
+- "What's the most sustainable crypto?"
+- "Compare Ethereum and Cardano"  
+- "What's trending today?"
+- "Tell me about Solana"
 
-"How's Bitcoin doing?"
+## ⚖️ Investment Scoring System
+- **60% Profitability Score** (price trends and market data)
+- **40% Sustainability Score** (energy efficiency and environmental impact)
 
-"What's the most sustainable crypto?"
+Recommendation scale:
+✅ **STRONG BUY** (Score ≥ 8/10)  
+👍 **CONSIDER** (Score 6-7.9/10)  
+⚠️ **CAUTION** (Score 4-5.9/10)  
+❌ **AVOID** (Score < 4/10)
 
-"Compare Ethereum and Cardano"
+## ⚠️ Important Disclaimer
+**This is educational software only.** Cryptocurrency investments carry substantial risk. Always:
+- Conduct your own research (DYOR)
+- Never invest more than you can afford to lose  
+- Consider consulting a financial advisor
 
-"What's trending today?"
 
-"Tell me about Solana"
-
-⚖️ Investment Scoring System
-CryptoBuddy evaluates cryptocurrencies using a proprietary scoring system:
-
-60% Profitability Score (based on price trends and market data)
-
-40% Sustainability Score (based on energy efficiency and environmental impact)
-
-Recommendations range from:
-✅ STRONG BUY (Score ≥ 8/10) to ❌ AVOID (Score < 4/10)
-
-⚠️ Important Disclaimer
-This is educational software only. Cryptocurrency investments carry substantial risk. Always:
-
-Conduct your own research (DYOR)
-
-Never invest more than you can afford to lose
-
-Consider consulting a financial advisor
