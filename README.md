@@ -24,6 +24,42 @@ CryptoBuddy is an intelligent chatbot that provides comprehensive cryptocurrency
 - Advanced caching for performance
 - Robust error handling
 
+## 📋 Installation
+
+### Prerequisites
+- Python 3.7 or higher
+- pip package manager
+- Internet connection
+
+### Step-by-Step Setup
+
+1. **Clone the repository**:
+```bash
+git clone https://github.com/Danielkague/crypto_buddy_chatbot.git
+cd crypto_buddy_chatbot
+```
+
+2. **Create a virtual environment (recommended)**:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+
+3. **Install required packages**:
+```bash
+pip install requests python-dotenv
+```
+
+4. **Set up environment variables** (optional for API rate limits):
+```bash
+echo "COINGECKO_API_KEY=your_api_key_here" > .env
+```
+
+5. **Run the chatbot**:
+```bash
+python crypto_bot.py
+```
+
 ## 📊 Supported Cryptocurrencies
 - Bitcoin (BTC)
 - Ethereum (ETH)  
@@ -37,24 +73,6 @@ CryptoBuddy is an intelligent chatbot that provides comprehensive cryptocurrency
 - Polkadot (DOT)
 - Litecoin (LTC)
 - Dogecoin (DOGE)
-
-## 🚀 Getting Started
-### Prerequisites
-- Python 3.7 or higher
-- Internet connection
-- `requests` library (`pip install requests`)
-
-### Installation
-1. Clone the repository:
-```bash
-git clone https://github.com/Danielkague/crypto_buddy_chatbot.git
-cd crypto_buddy_chatbot
-```
-
-2. Run the chatbot:
-```bash
-python crypto_bot.py
-```
 
 ## 💬 Usage Examples
 ```
@@ -96,5 +114,7 @@ Recommendation scale:
 - Conduct your own research (DYOR)
 - Never invest more than you can afford to lose  
 - Consider consulting a financial advisor
+
+
 
 
